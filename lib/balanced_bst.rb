@@ -13,6 +13,8 @@ end
 
 # Tree: handles the bst logic
 class Tree
+  attr_accessor :root
+
   def initialize(arr)
     @arr = arr.sort.uniq # clean the array
     @root = build_tree(@arr)
@@ -46,6 +48,33 @@ class Tree
     end
     node
   end
+
+  def delete(value, node = @root)
+    return node if node.nil?
+
+    if value < node.data
+      node.left = delete(value, node.left)
+    elsif value > node.data
+      node.right = delete(value, node.right)
+    else
+      if node.left.nil?
+        temp = node.right
+        node = nil
+        return temp
+      elsif node.right.nil?
+        temp = node.left
+        node = nil
+        return temp
+      end
+
+      o_temp = node
+      temp = o_tempnode.left until node.left.nil? # possible issue
+      node.data = temp.data
+      node.right = delete(temp.data, node.right)
+    end
+
+    node
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
@@ -53,4 +82,6 @@ tree = Tree.new(arr)
 tree.pretty_print
 tree.insert(6)
 tree.insert(20)
+tree.pretty_print
+tree.delete(8)
 tree.pretty_print
