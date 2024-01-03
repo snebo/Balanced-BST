@@ -3,12 +3,13 @@
 # stores node data for the BTS
 class Node
   attr_accessor :data, :left, :right
+
   def initialize(data)
     @data = data
     @left = nil
     @right = nil
   end
-end 
+end
 
 # Tree: handles the bst logic
 class Tree
@@ -16,7 +17,7 @@ class Tree
     @arr = arr.sort.uniq # clean the array
     @root = build_tree(@arr)
   end
-  
+
   def build_tree(arr)
     return nil if arr.empty?
     return Node.new(arr.first) if arr.length == 1
@@ -28,7 +29,14 @@ class Tree
 
     root_node
   end
+
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
 tree = Tree.new(arr)
+tree.pretty_print
