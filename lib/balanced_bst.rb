@@ -13,7 +13,7 @@ end
 # Tree: handles the bst logic
 class Tree
   def initialize(arr)
-    @arr = arr
+    @arr = arr.sort.uniq # clean the array
     @root = build_tree(@arr)
   end
   
