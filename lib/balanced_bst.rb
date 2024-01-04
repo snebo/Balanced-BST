@@ -60,16 +60,16 @@ class Tree
   def contain?(value, node = @root)
     return false if node.nil?
     if value < node.data
-      return contain?(value, node.left)
+      contain?(value, node.left)
     elsif value > node.data
-      return contain?(value, node.right)
+      contain?(value, node.right)
     else
-      return true
+      true
     end
   end
 
-  def delete(value, node = @root)
-    remove_node(value, node = @root)
+  def delete(value)
+    remove_node(value)
     @size -= 1
   end
 
