@@ -57,6 +57,17 @@ class Tree
     find_max(node.right)
   end
 
+  def find(value, node = @root)
+    return nil if node.nil?
+    if value > node.data
+      find(value, node.right)
+    elsif value < node.data
+      find(value, node.left)
+    else
+      node
+    end
+  end
+
   def contain?(value, node = @root)
     return false if node.nil?
     if value < node.data
@@ -123,3 +134,4 @@ puts "contains '8' = #{tree.contain?(8)}"
 tree.delete(4)
 tree.delete(9)
 tree.pretty_print
+puts "'8' is : #{tree.find(8)}"

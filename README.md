@@ -1,7 +1,9 @@
 # Balanced-BST
  Balanced Binary Sort Tree
 
-Making a balanced binary sort tree
+ ## note
+ To make sure the  tree is balanced, the array is sorted and uniq values are removed before the tree is created
+
 
 
 ## Methods
@@ -13,3 +15,4 @@ Making a balanced binary sort tree
 | delete(value)           | delete the value in the node tree and make adjustments to the child elemnts             |
 | contain?                | returns true of false depending on if the value given is in the node tree               |
 | size                    | returns the number(int) of items in the bst                                             |
+| find                    | returns the node address of the node with the given value                               |
