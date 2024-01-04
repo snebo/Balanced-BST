@@ -18,6 +18,7 @@ class Tree
   def initialize(arr)
     @arr = arr.sort.uniq # clean the array
     @root = build_tree(@arr)
+    @size = 0
   end
 
   def build_tree(arr)
@@ -39,41 +40,16 @@ class Tree
   end
 
   def insert(value, node = @root)
-    return Node.new(value) if node.nil?
+    curr_node = node
+    return Node.new(value) if curr_node.nil?
 
-    if value < node.data
-      node.left = insert(value, node.left)
-    elsif value > node.data
-      node.right = insert(value, node.right)
-    end
-    node
-  end
-
-  def delete(value, node = @root)
-    return node if node.nil?
-
-    if value < node.data
-      node.left = delete(value, node.left)
-    elsif value > node.data
-      node.right = delete(value, node.right)
-    else
-      if node.left.nil?
-        temp = node.right
-        node = nil
-        return temp
-      elsif node.right.nil?
-        temp = node.left
-        node = nil
-        return temp
-      end
-
-      o_temp = node
-      temp = o_tempnode.left until node.left.nil? # possible issue
-      node.data = temp.data
-      node.right = delete(temp.data, node.right)
+    until curr_node.nil?
+      prev_node = curr_node
+      value < curr_node.data ? curr_node = curr_node.left : curr_node = curr_node.right
     end
 
-    node
+    value < prev_node.data ? prev_node.left = Node.new(value) : prev_node.right = Node.new(value)
+    @size += 1
   end
 end
 
@@ -83,5 +59,5 @@ tree.pretty_print
 tree.insert(6)
 tree.insert(20)
 tree.pretty_print
-tree.delete(8)
-tree.pretty_print
+# tree.delete_iteerative(4)
+# tree.pretty_print
