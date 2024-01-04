@@ -55,18 +55,31 @@ class Tree
   def find_min(node = @root)
     # check for the left most node
     return nil if node.nil?
+
     return node if node.left.nil?
 
-    return find_min(node.left)
+    find_min(node.left)
   end
 
   def find_max(node = @root)
     return nil if node.nil?
-    return node node.right.nil?
 
-    return find_max(node.right)
+    return node if node.right.nil?
+
+    find_max(node.right)
   end
-  
+
+  def contain?(value, node = @root)
+    return false if node.nil?
+    if value < node.data
+      return contain?(value, node.left)
+    elsif value > node.data
+      return contain?(value, node.right)
+    else
+      return true
+    end
+  end
+
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
@@ -75,5 +88,7 @@ tree.pretty_print
 tree.insert(6)
 tree.insert(20)
 tree.pretty_print
+puts "Left most: #{tree.find_min}"
+puts "contains '8' = #{tree.contain?(8)}"
 # tree.delete_iteerative(4)
 # tree.pretty_print
