@@ -57,6 +57,20 @@ class Tree
     find_max(node.right)
   end
 
+  def balanced?(node = @root)
+    return nil if node.nil?
+
+    h_left = height(node.left)
+    h_right = height(node.right)
+    puts "left #{h_left}, right#{h_right}"
+    (h_left - h_right) <= 1
+  end
+
+  def rebalance(node = @root)
+    node = in_order_travel(node)
+    @root = build_tree(node)
+  end
+
   def in_order_travel(node = @root, &blk)
     return [] if node.nil?
 
@@ -90,8 +104,8 @@ class Tree
 
     left = height(node.left)
     right = height(node.right)
-
-    [left, right].max + 1
+    left > right ? left + 1 : right + 1
+    # [left, right].max + 1
   end
 
   def depth(node = @root)
@@ -201,3 +215,10 @@ p tree.level_order
 p tree.pre_order_travel
 puts "The node's height is:#{tree.height}"
 puts "Node depth: #{tree.depth}"
+tree.delete(6)
+tree.delete(8)
+tree.delete(23)
+tree.pretty_print
+puts "Is the node balanced: #{tree.balanced?}"
+tree.rebalance
+tree.pretty_print
