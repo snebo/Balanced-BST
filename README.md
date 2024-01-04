@@ -16,3 +16,7 @@
 | contain?                | returns true of false depending on if the value given is in the node tree               |
 | size                    | returns the number(int) of items in the bst                                             |
 | find                    | returns the node address of the node with the given value                               |
+| in_order_travel         | returns the node keys in the inorder depth first search tree traversal                  |
+| pre_order_travel        | returns the node keys in the preorder depth first search tree traversal                 |
+| post_order_travel       | returns the node keys in the postorder depth first search tree traversal                 |
+| level_order             | returns the node keys in the level order Breath first search tree traversal             |
