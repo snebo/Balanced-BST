@@ -33,7 +33,7 @@ class Tree
 
     until curr_node.nil?
       prev_node = curr_node
-      value < curr_node.data ? curr_node = curr_node.left : curr_node = curr_node.right
+      curr_node = value < curr_node.data ? curr_node.left : curr_node.right
     end
 
     value < prev_node.data ? prev_node.left = Node.new(value) : prev_node.right = Node.new(value)
@@ -83,6 +83,7 @@ class Tree
 
   def post_order_travel(node = @root, &blk)
     return [] if node.nil?
+
     arr = []
     arr.concat(post_order_travel(node.right, &blk)) unless node.right.nil?
     block_given? ? yield(node.data) : arr << node.data
@@ -92,6 +93,7 @@ class Tree
 
   def pre_order_travel(node = @root, &blk)
     return [] if node.nil?
+
     arr = []
     block_given? ? yield(node.data) : arr << node.data
     arr.concat(pre_order_travel(node.left, &blk)) unless node.left.nil?
@@ -119,6 +121,7 @@ class Tree
 
   def find(value, node = @root)
     return nil if node.nil?
+
     if value > node.data
       find(value, node.right)
     elsif value < node.data
@@ -130,6 +133,7 @@ class Tree
 
   def level_order(node = @root)
     return nil if node.nil?  
+
     arr = []
     que = [node]
     until que.empty?
@@ -144,6 +148,7 @@ class Tree
 
   def contain?(value, node = @root)
     return false if node.nil?
+
     if value < node.data
       contain?(value, node.left)
     elsif value > node.data
