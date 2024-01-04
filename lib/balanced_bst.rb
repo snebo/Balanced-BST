@@ -80,6 +80,34 @@ class Tree
     end
   end
 
+  def delete(value, node = @root)
+    remove_node(value, node = @root)
+    @size -= 1
+  end
+
+  def remove_node(value, node = @root)
+    # using an external method to sav size decreases
+    return nil if node.nil?
+
+    if node.data > value
+      node.left = remove_node(value, node.left)
+    elsif node.data < value
+      node.right = remove_node(value, node.right)
+    else
+      if !node.left.nil? && !node.right.nil?
+        min_of_right = find_min(node.right)
+        node.data = min_of_right.data
+        node.right = remove_node(min_of_right.data, node.right)
+      elsif !node.left.nil?
+        node = node.left
+      elsif !node.right.nil?
+        node = node.right
+      else
+        node = nil
+      end
+    end
+    node
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
@@ -90,5 +118,6 @@ tree.insert(20)
 tree.pretty_print
 puts "Left most: #{tree.find_min}"
 puts "contains '8' = #{tree.contain?(8)}"
-# tree.delete_iteerative(4)
-# tree.pretty_print
+tree.delete(4)
+tree.delete(9)
+tree.pretty_print
