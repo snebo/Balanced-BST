@@ -51,6 +51,22 @@ class Tree
     value < prev_node.data ? prev_node.left = Node.new(value) : prev_node.right = Node.new(value)
     @size += 1
   end
+
+  def find_min(node = @root)
+    # check for the left most node
+    return nil if node.nil?
+    return node if node.left.nil?
+
+    return find_min(node.left)
+  end
+
+  def find_max(node = @root)
+    return nil if node.nil?
+    return node node.right.nil?
+
+    return find_max(node.right)
+  end
+  
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
