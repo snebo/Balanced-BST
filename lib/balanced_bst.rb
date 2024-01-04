@@ -85,6 +85,24 @@ class Tree
     arr
   end
 
+  def height(node = @root)
+    return -1 if node.nil?
+
+    left = height(node.left)
+    right = height(node.right)
+
+    [left, right].max + 1
+  end
+
+  def depth(node = @root)
+    return 0 if node.nil?
+
+    left = depth(node.left)
+    right = depth(node.right)
+
+    left > right ? (left + 1) : (right + 1)
+  end
+
   def find(value, node = @root)
     return nil if node.nil?
     if value > node.data
@@ -181,3 +199,5 @@ p tree.in_order_travel
 p tree.post_order_travel
 p tree.level_order
 p tree.pre_order_travel
+puts "The node's height is:#{tree.height}"
+puts "Node depth: #{tree.depth}"
