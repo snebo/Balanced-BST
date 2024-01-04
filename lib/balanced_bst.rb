@@ -57,6 +57,34 @@ class Tree
     find_max(node.right)
   end
 
+  def in_order_travel(node = @root, &blk)
+    return [] if node.nil?
+
+    arr = []
+    arr.concat(in_order_travel(node.left, &blk)) unless node.left.nil?
+    block_given? ? yield(node.data) : arr << node.data
+    arr.concat(in_order_travel(node.right, &blk)) unless node.right.nil?
+    arr
+  end
+
+  def post_order_travel(node = @root, &blk)
+    return [] if node.nil?
+    arr = []
+    arr.concat(post_order_travel(node.right, &blk)) unless node.right.nil?
+    block_given? ? yield(node.data) : arr << node.data
+    arr.concat(post_order_travel(node.left, &blk)) unless node.left.nil?
+    arr
+  end
+
+  def pre_order_travel(node = @root, &blk)
+    return [] if node.nil?
+    arr = []
+    block_given? ? yield(node.data) : arr << node.data
+    arr.concat(pre_order_travel(node.left, &blk)) unless node.left.nil?
+    arr.concat(pre_order_travel(node.right, &blk)) unless node.right.nil?
+    arr
+  end
+
   def find(value, node = @root)
     return nil if node.nil?
     if value > node.data
@@ -66,6 +94,20 @@ class Tree
     else
       node
     end
+  end
+
+  def level_order(node = @root)
+    return nil if node.nil?  
+    arr = []
+    que = [node]
+    until que.empty?
+      node = que.shift
+      block_given? ? yield(node) : arr << node.data
+
+      que << node.left unless node.left.nil?
+      que << node.right unless node.right.nil?
+    end
+    arr unless block_given?
   end
 
   def contain?(value, node = @root)
@@ -121,20 +163,6 @@ class Tree
     end
     node
   end
-
-  def level_order(node = @root)
-    if block_given?
-      result = []
-      que = [node]
-      until que.empty?
-        result << que[0].data
-        node = que.pop(0)
-        que << node.left unless node.left.nil?
-        que << node.right unless node.right.nil?
-      end
-      result
-    end
-  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
@@ -149,3 +177,7 @@ tree.delete(4)
 tree.delete(9)
 tree.pretty_print
 puts "'8' is : #{tree.find(8)}"
+p tree.in_order_travel
+p tree.post_order_travel
+p tree.level_order
+p tree.pre_order_travel
