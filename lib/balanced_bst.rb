@@ -121,6 +121,20 @@ class Tree
     end
     node
   end
+
+  def level_order(node = @root)
+    if block_given?
+      result = []
+      que = [node]
+      until que.empty?
+        result << que[0].data
+        node = que.pop(0)
+        que << node.left unless node.left.nil?
+        que << node.right unless node.right.nil?
+      end
+      result
+    end
+  end
 end
 
 arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7]
