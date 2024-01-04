@@ -13,24 +13,12 @@ end
 
 # Tree: handles the bst logic
 class Tree
-  attr_accessor :root
+  attr_reader :size
 
   def initialize(arr)
     @arr = arr.sort.uniq # clean the array
     @root = build_tree(@arr)
     @size = 0
-  end
-
-  def build_tree(arr)
-    return nil if arr.empty?
-    return Node.new(arr.first) if arr.length == 1
-
-    mid = arr.length / 2
-    root_node = Node.new(arr[mid])
-    root_node.left = build_tree(arr.take(mid))
-    root_node.right = build_tree(arr.drop(mid + 1))
-
-    root_node
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -83,6 +71,20 @@ class Tree
   def delete(value, node = @root)
     remove_node(value, node = @root)
     @size -= 1
+  end
+
+  private
+
+  def build_tree(arr)
+    return nil if arr.empty?
+    return Node.new(arr.first) if arr.length == 1
+
+    mid = arr.length / 2
+    root_node = Node.new(arr[mid])
+    root_node.left = build_tree(arr.take(mid))
+    root_node.right = build_tree(arr.drop(mid + 1))
+
+    root_node
   end
 
   def remove_node(value, node = @root)
